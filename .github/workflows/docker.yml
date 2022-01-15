@@ -44,5 +44,5 @@ jobs:
         with:
           push: true
           tags: ghcr.io/kou64yama/brew:latest
-          cache-from: type=registry,ref=ghcr.io/kou64yama/brew:latest
-          cache-to: type=registry,ref=ghcr.io/kou64yama/brew:latest,mode=max
+          cache-from: type=registry,ref=ghcr.io/kou64yama/brew:cache
+          cache-to: type=registry,ref=ghcr.io/kou64yama/brew:cache,mode=max
