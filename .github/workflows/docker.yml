@@ -1,4 +1,4 @@
-name: Build and push docker image
+name: build
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
           push: false
           load: true
           tags: ghcr.io/kou64yama/brew:latest
-          cache-from: type=registry,ref=ghcr.io/koou64yama/brew:latest
+          cache-from: type=registry,ref=ghcr.io/kou64yama/brew:latest
 
       - name: Test
         run: |
@@ -44,5 +44,5 @@ jobs:
         with:
           push: true
           tags: ghcr.io/kou64yama/brew:latest
-          cache-from: type=registry,ref=ghcr.io/koou64yama/brew:latest
-          cache-to: type=registry,ref=ghcr.io/koou64yama/brew:latest,mode=max
+          cache-from: type=registry,ref=ghcr.io/kou64yama/brew:latest
+          cache-to: type=registry,ref=ghcr.io/kou64yama/brew:latest,mode=max
