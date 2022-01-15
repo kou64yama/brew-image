@@ -1,0 +1,48 @@
+name: Build and push docker image
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          load: true
+          tags: ghcr.io/kou64yama/brew:latest
+          cache-from: type=registry,ref=ghcr.io/koou64yama/brew:latest
+
+      - name: Test
+        run: |
+          docker run --rm ghcr.io/kou64yama/brew:latest brew doctor
+
+      - name: Push
+        uses: docker/build-push-action@v2
+        if: ${{ github.event_name == 'push' }}
+        with:
+          push: true
+          tags: ghcr.io/kou64yama/brew:latest
+          cache-from: type=registry,ref=ghcr.io/koou64yama/brew:latest
+          cache-to: type=registry,ref=ghcr.io/koou64yama/brew:latest,mode=max
