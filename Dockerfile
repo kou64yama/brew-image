@@ -50,7 +50,7 @@ COPY --from=builder /Taps /
 
 ################################################################################
 
-FROM ubuntu:20.04 AS base
+FROM ubuntu:20.04 AS runtime
 
 LABEL maintainer=kou64yama@gmail.com
 
@@ -61,7 +61,7 @@ RUN apt-get update \
 
 ################################################################################
 
-FROM base AS slim
+FROM runtime AS slim
 
 ARG USERNAME=linuxbrew
 ARG USER_UID=1000
@@ -84,7 +84,7 @@ COPY --from=linuxbrew --chown=${USERNAME}:${USERNAME} \
 
 ################################################################################
 
-FROM slim AS runtime
+FROM slim
 
 COPY --from=taps --chown=${USERNAME}:${USERNAME} \
   / /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps
