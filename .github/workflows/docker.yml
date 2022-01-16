@@ -52,6 +52,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         with:
           push: true
+          target: runtime
           tags: ghcr.io/kou64yama/brew:runtime
 
       - name: Push (linuxbrew)
@@ -59,6 +60,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         with:
           push: true
+          target: linuxbrew
           tags: ghcr.io/kou64yama/brew:linuxbrew
 
       - name: Push (taps)
@@ -66,6 +68,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         with:
           push: true
+          target: taps
           tags: ghcr.io/kou64yama/brew:taps
 
       - name: Push (slim)
@@ -73,4 +76,5 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         with:
           push: true
+          target: slim
           tags: ghcr.io/kou64yama/brew:slim
